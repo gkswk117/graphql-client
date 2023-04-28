@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, } from "react-router-dom"
+import { BrowserRouter, Routes, Route, } from "react-router-dom"
 import Movies from "./routes/Movies";
 import Movie from "./routes/Movie";
 
