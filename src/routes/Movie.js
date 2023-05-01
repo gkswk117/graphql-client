@@ -1,16 +1,20 @@
 import { useQuery, gql } from "@apollo/client";
 import { useParams } from "react-router-dom";
+import {Container, Column, Title, Subtitle, Description, Image} from "../css/MovieCss";
 
 const GET_MOVIE = gql`
 query getMovie($movieId: String!){
     movie(id: $movieId){
         id
         title
+        medium_cover_image
+        rating
     }
 }
 `
 
 export default function Movie() {
+    
     const {id} = useParams()
     const result = useQuery(GET_MOVIE, {
         variables:{
@@ -21,19 +25,18 @@ export default function Movie() {
     console.log(result)
     const view  = ()=>{
         if(result.data===undefined){
-            return <h1>Loading...</h1>
+            return <Title>Loading...</Title>
         }
-        
-        return (<div>
-            <h1>This is movie details</h1>
-        <p>{result.data.movie.title}</p>
-        </div>)
-        
+        return <Title>{result.data.movie?.title}</Title>
     }
 
     return (
-        <div>
+        <Container>
+          <Column>
             {view()}
-        </div>
-    )
+            <Subtitle>⭐️ {result.data?.movie?.rating}</Subtitle>
+          </Column>
+          <Image bg={result.data?.movie?.medium_cover_image} />
+        </Container>
+      );
 }
