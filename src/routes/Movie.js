@@ -9,6 +9,7 @@ query getMovie($movieId: String!){
         title
         medium_cover_image
         rating
+        isLiked @client
     }
 }
 `
@@ -29,12 +30,14 @@ export default function Movie() {
         }
         return <Title>{result.data.movie?.title}</Title>
     }
-
+    //movie? => 자바스크립트 물음표 선택적 연산자 Optional chaining
     return (
         <Container>
           <Column>
             {view()}
+            {/* 연습용. 앞으로는 이렇게 안하고 니코방식(Movies.js)대로 할 것. */}
             <Subtitle>⭐️ {result.data?.movie?.rating}</Subtitle>
+            <button>{result.data?.movie?.isLiked ? "Unlike" : "Like"}</button>
           </Column>
           <Image bg={result.data?.movie?.medium_cover_image} />
         </Container>
